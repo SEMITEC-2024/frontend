@@ -8,17 +8,18 @@ export default function Login({ setToken }) {
 
     const login = async (credentials) => {
         try {
-            const response = await fetch('http://localhost:3000/login', {
+            const response = await fetch('http://localhost:5000/login', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(credentials)
               })
-              const data = response.json()
-              console.log(data)
-              const headers = response.headers
+              const headers = response.headers;
+              console.log(response.headers.get('auth-token'))
               console.log(headers)
+              const data = await response.json()
+              console.log(data)
         } catch (error){
             console.log(error)
         }
