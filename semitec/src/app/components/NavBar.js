@@ -7,6 +7,7 @@ import avatar from "@/app/ui/avatar.svg";
 import NavItem from "./NavItem";
 import styles from "./NavBar.module.css";
 import { useState } from "react";
+import DropdownButton from "./dropbutton";
 
 export default function NavBar({ menuList }) {
   const [activeId, setActiveId] = useState(0);
@@ -48,12 +49,22 @@ export default function NavBar({ menuList }) {
                   onClick={() => {
                     setActiveId(index);
                   }}
+                  onFocus={() => {
+                    setActiveId(index);
+                  }}
                 >
-                  <NavItem
-                    active={activeId === index}
-                    text={item.text}
-                    href={item.href}
-                  />
+                  {item.children && item.children.length > 0 ? (
+                      <DropdownButton
+                        text={item.text}
+                        items={item.children}
+                      />
+                    ) : (
+                      <NavItem
+                        active={activeId === index}
+                        text={item.text}
+                        href={item.href}
+                      />
+                    )}
                 </div>
               ))}
             </div>

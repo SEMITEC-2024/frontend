@@ -24,3 +24,39 @@
     column-gap: 2.22vw;
     font-size: 1.3vw;
 }
+
+.navDropButton {
+    background: none;
+    border: none;
+    color: white;
+    text-decoration: none;
+    font-size: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.navDropButton:focus, .navDropButton:hover{
+    font-weight: 600;
+}
+
+.dropdownContent {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 1vw;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    flex-direction: column;
+}
+  
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown:hover .dropdownContent,
+.dropdown:focus-within .dropdownContent {
+    display: flex;
+}
