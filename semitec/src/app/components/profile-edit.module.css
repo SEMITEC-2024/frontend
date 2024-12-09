@@ -39,7 +39,7 @@
     display: block; /* Ensure label displays as block */
 }
 
-.container input, select, textarea {
+.formsInput {
     width: 90%;
     font-size: 1.3vw;
     border-radius: 4px;

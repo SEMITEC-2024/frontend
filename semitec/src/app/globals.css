@@ -4,14 +4,21 @@
   --text: black;
   --link: white;
   --selected-text: blue;
-  --button-color: #824c0f;
+
+  --button-color: #F29325; 
   --button-text: white;
-  --button-border: 0px;
+
+  --button-hover: #D94F04;
+  --button-active: #D94F04cc; 
+  
+
+  --button-border:  2px solid #F29325;
   --buttonAlt-color: transparent;
   --buttonAlt-text: black;
   --buttonAlt-border: 2px solid #F29325;
   --buttonAlt-hover: #f292253c;
   --buttonAlt-active: #f29225cc;
+
   --navbar-background: #007172;
   --navbar-border: 0px;
   --link-color: white;
@@ -26,6 +33,7 @@
 
   /* Card container */
   --card-container-bg: #ebebeb;
+
 }
 [data-theme="Predeterminado"] {
   --background: white;
@@ -129,6 +137,36 @@
   --accesibility-bar-btn-border: 2px solid #ffee32;
 
   --card-container-bg: #000000;
+}
+
+[data-theme="Anochecer"]{
+  --background: #ffffff;
+  --foreground: black;
+  --text: black;
+  --link: white;
+  --selected-text: blue;
+  --button-color: #594ae2;
+  --button-text: white;
+  --button-border: 0px;
+  --buttonAlt-color: transparent;
+  --buttonAlt-text: #000000;
+  --buttonAlt-border: 2px solid #ff4081;
+  --buttonAlt-hover: #ff6699;
+  --buttonAlt-active: #ff1f69;
+  --navbar-background: #776be7;
+  --navbar-border: 0px;
+  --link-color: white;
+  --logo-color: white;
+  --avatar-stroke: #594ae2;
+
+  /* Accessibility bar */
+  --accesibility-bar-bg: #594ae2;
+  --accesibility-bar-btn-color: white;
+  --accesibility-bar-btn-border: 2px solid white;
+  --accesibility-bar-border: 0px;
+
+  /* Card container */
+  --card-container-bg: #d3d3d3d3;
 }
 
 body {

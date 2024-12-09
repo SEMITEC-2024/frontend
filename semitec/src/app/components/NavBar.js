@@ -15,7 +15,7 @@ export default function NavBar({ menuList }) {
   const [optionsMenuStatus, setProfileOptionsMenuStatus] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const options = ["Ver Perfil", "Cerrar Sesión"];
+  const options = [{index: 0, nombre:"Ver Perfil"}, {index: 1, nombre:"Cerrar Sesión"}];
 
   const handleProfileClick = () => {
     if (pathname.includes("/teacher")) {
@@ -273,14 +273,14 @@ export default function NavBar({ menuList }) {
               
 
             <div className={styles.navMenu}>
-              {menuList.map((item, index) => (
+              {menuList.map((item) => (
                 <div
-                  key={index}
+                  key={item.index}
                   onClick={() => {
-                    setActiveId(index);
+                    setActiveId(item.index);
                   }}
                   onFocus={() => {
-                    setActiveId(index);
+                    setActiveId(item.index);
                   }}
                 >
                   {item.children && item.children.length > 0 ? (
@@ -290,7 +290,7 @@ export default function NavBar({ menuList }) {
                       />
                     ) : (
                       <NavItem
-                        active={activeId === index}
+                        active={activeId === item.index}
                         text={item.text}
                         href={item.href}
                       />
@@ -340,15 +340,16 @@ export default function NavBar({ menuList }) {
                   <div onBlur={onBlurOptionsMenu}>
                     <ul className={styles.options}>
                       {
-                      options.map((option, index)=>
+                      options.map((option)=>
                         <li className={styles.optionsText} 
-                        aria-label={option} 
+                        key={option.index}
+                        aria-label={option.nombre} 
                         tabIndex="0" 
                         role="menuitem" 
-                        onClick={() => handleProfileOptions(index)}  
-                        onKeyDown={(e) => handleKeyDown(e, index)}
+                        onClick={() => handleProfileOptions(option.index)}  
+                        onKeyDown={(e) => handleKeyDown(e, option.index)}
                         >
-                          {option}
+                          {option.nombre}
                         </li>)
                       }
                     </ul>

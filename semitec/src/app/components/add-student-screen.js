@@ -7,6 +7,7 @@ import buttonStyles from "@/app/_styles/Button.module.css";
 import { useEffect, useState } from "react";
 import UIDisplayInfo from "./UIStateDisplay"
 import { useSearchParams } from "next/navigation";
+import Dialog from "@/app/components/modularPopup/modularpopup";
 
 export default function LeesonsScreen() {
   const [studentsDB, setStudents] = useState([]);
@@ -28,7 +29,26 @@ export default function LeesonsScreen() {
   const [selectedFilteredInstitution, setSelectedFilteredInstitution] = useState("")
   const [name, setName] = useState("") 
   const searchParams = useSearchParams();
+  //DIALOG
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [modalTitle, setModalTitle] = useState();
+  const [modalMessage, setModalMessage] = useState();
 
+  const handleOverlayAccept = () => {
+    setShowOverlay(false);
+}
+//Watch for the event of escape key when the dialog is opened, then remove the listener.
+useEffect(() => {
+  const handleKeyDown = (event) => {
+  if (event.key === 'Escape') {
+      setShowOverlay(false);
+  }
+  };
+  document.addEventListener('keydown', handleKeyDown);
+  return () => {
+  document.removeEventListener('keydown', handleKeyDown);
+  };
+}, []);
   
   const fetchCount = async (var_name,var_institution_id,var_group_id) => {
     try {
@@ -157,7 +177,7 @@ export default function LeesonsScreen() {
     if (!selectedStudent) {
       alert("Por favor, seleccione un estudiante.");
       return;
-    }
+    }   
     try {
       const groupId = searchParams.get("group_id");
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/teacher/groups/students/add`,{
@@ -171,12 +191,14 @@ export default function LeesonsScreen() {
           var_user_id: selectedStudent
       })
       });
+      console.log(response)
       if (response.ok) {
-        alert("Estudiante asignado exitosamente al grupo.");
         setCurrentPage(1);
         fetchCount(name, selectedFilteredInstitution, searchParams.get("group_id"))
         getStudents(name, selectedInstitution, searchParams.get("group_id"), currentPage, itemsPerPage)
-        
+        setModalTitle("Éxito");
+        setModalMessage("Estudiante asignado exitosamente al grupo.");
+        setShowOverlay(true);
       } else {
         const error = await response.json();
         alert(`Error al asignar el estudiante: ${error.message}`);
@@ -506,8 +528,14 @@ export default function LeesonsScreen() {
                 )}
             </div>
         </div>
+        <Dialog
+          title={modalTitle}
+          message={modalMessage}
+          onConfirm={handleOverlayAccept}
+          show={showOverlay}
+          showCancel={false}
+        />
     </div>
-    
   );
 };
 

@@ -16,13 +16,15 @@ export default function Menu({ isOpen, menuList, handleClick }) {
         position: "absolute",
         top: "125px",
         right: "10px",
-        margin: "0",
-        padding: "0px",
-        border: "0px solid white",
+        border: "1px solid var(--foreground)",
         zIndex: 1000,
+        padding: '1vw',
+        backgroundColor: 'var(--background)',
+        borderRadius: '10px',
+        boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.2)',
+        flexDirection: 'column'
       }}
-    >
-      {isOpen && (
+    >  
         <ul className={styles.menuList}>
           {menuList.map((item, index) => (
             <li
@@ -37,7 +39,7 @@ export default function Menu({ isOpen, menuList, handleClick }) {
             </li>
           ))}
         </ul>
-      )}
+
     </menu>
   );
 }

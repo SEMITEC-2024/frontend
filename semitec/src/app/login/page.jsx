@@ -1,13 +1,36 @@
 "use client";
-import React from "react";
+import { useEffect, useState, React } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import Dialog from "@/app/components/modularPopup/modularpopup";
 import "./Login.css";
 import "../components/button/button.css";
+import buttonStyle from "@/app/_styles/Button.module.css";
 
 export default function Login({ }) {
     const router = useRouter();
+    //Dialog
+    const [showOverlay, setShowOverlay] = useState(false);
+    const [modalTitle, setModalTitle] = useState();
+    const [modalMessage, setModalMessage] = useState();
+
+    const handleOverlayAccept = () => {
+        setShowOverlay(false);
+    }
+
+    //Watch for the event of escape key when the dialog is opened, then remove the listener.
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+        if (event.key === 'Escape') {
+            setShowOverlay(false);
+        }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     const login = async (credentials) => {
         try {
@@ -19,7 +42,9 @@ export default function Login({ }) {
                 body: JSON.stringify(credentials),
             });
             if (!res.ok) {
-                alert("Usuario o  contraseña incorrectas");
+                setModalTitle("Aviso");
+                setModalMessage("Usuario o contraseña incorrectas");
+                setShowOverlay(true);
             } else {
                 const data = await res.json();
                 const token = res.headers.get("auth-token");
@@ -77,12 +102,11 @@ export default function Login({ }) {
 
                             return errors;
                         }}
-                        onSubmit={(values, { setSubmitting }) => {
-                            setTimeout(() => {
-                                //alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 400);
-                            login(values);
+                        onSubmit={async (values, { setSubmitting }) => {  
+                            await login(values);
+                        
+                            setSubmitting(false);
+                           
                         }}
                     >
                         {({ isSubmitting }) => (
@@ -112,10 +136,10 @@ export default function Login({ }) {
                                     component="div"
                                 />
                                 <br></br>
-                                <div className="button-wrap">
+                                <div className="button-wrap" style={{padding:'15px'}}>
                                     <button
                                         type="submit"
-                                        className="button"
+                                        className={buttonStyle.primary}
                                         disabled={isSubmitting}
                                     >
                                         Iniciar Sesión
@@ -135,6 +159,13 @@ export default function Login({ }) {
                     </Formik>
                 </div>
             </section>
+        <Dialog
+          title={modalTitle}
+          message={modalMessage}
+          onConfirm={handleOverlayAccept}
+          show={showOverlay}
+          showCancel={false}
+        />
         </div>
     );
 }

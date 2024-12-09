@@ -7,6 +7,8 @@ import info from "@/app/ui/info-circle.svg";
 import buttonStyles from "@/app/_styles/Button.module.css";
 import UIDisplayInfo from "@/app/components/UIStateDisplay";
 import CryptoJS from 'crypto-js';
+import UILoading from "@/app/components/misc/loading"
+
 export default function CreatLesson() {
   const LESSON_KEY = "lesson";
   const EXPIRY_TIME = 20 * 1000;
@@ -189,11 +191,10 @@ export default function CreatLesson() {
     }
   };
 
-  if(loading){
-    return(
-      <UIDisplayInfo
-        title="Cargando...">
-      </UIDisplayInfo>
+  if (loading) {
+    return (
+      <UILoading
+      />
     )
   }
 
@@ -211,6 +212,7 @@ export default function CreatLesson() {
             <input
               required
               value={name}
+              className={styles.formsInput}
               placeholder="Ingrese el nombre de la actividad"
               minLength={1}
               maxLength={16}
@@ -222,6 +224,7 @@ export default function CreatLesson() {
             <textarea
               required
               value={description}
+              className={styles.formsInput}
               placeholder="Ingrese la descripción de la actividad"
               rows="5"
               minLength={1}
@@ -234,6 +237,7 @@ export default function CreatLesson() {
             <textarea
               required
               value={content}
+              className={styles.formsInput}
               placeholder="Ingrese el contenido de la actividad"
               rows="5"
               minLength={1}
@@ -272,6 +276,7 @@ export default function CreatLesson() {
             <input
               required
               value={max_time}
+              className={styles.formsInput}
               placeholder="Ingrese el tiempo máximo"
               minLength={1}
               maxLength={4}
@@ -283,6 +288,7 @@ export default function CreatLesson() {
             <input
               required
               value={max_mistakes}
+              className={styles.formsInput}
               placeholder="Ingrese el máximo de errores permitidos"
               minLength={1}
               onChange={handleChangeMaxMistakes}
@@ -295,6 +301,7 @@ export default function CreatLesson() {
               required
               placeholder="Ingrese las iteraciones del contenido"
               value={iterations}
+              className={styles.formsInput}
               minLength={0}
               onChange={handleChangeIterations}
               type="number"
@@ -304,6 +311,7 @@ export default function CreatLesson() {
             <select
               id="level_id"
               style={{width:'95%'}}
+              className={styles.formsInput}
               value={level_id}
               onChange={handleChangeLevel}
             >
@@ -323,6 +331,7 @@ export default function CreatLesson() {
               style={{width: '4vh', height: '4vh', margin: '1vw'}}
               type="checkbox"
               checked={publicActivity}
+              className={styles.formsInput}
               onChange={handleChangePublic}
               id="publicActivity"
               alt="Marque esta casilla si desea que la actividad sea pública y cualquier usuario pueda realizarla."

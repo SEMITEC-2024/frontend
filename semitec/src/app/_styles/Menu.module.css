@@ -9,3 +9,6 @@
 .menuList li {
     cursor: pointer;
 }
+.menuList li:hover, .menuList li:focus{
+    font-weight: 600;
+}

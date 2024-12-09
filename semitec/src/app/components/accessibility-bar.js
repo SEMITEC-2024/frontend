@@ -9,24 +9,36 @@ import bigger from "../ui/bigger.svg";
 import contrast from "../ui/contrast.svg";
 import { useTheme } from "next-themes";
 import Menu from "@/app/components/Menu.js";
+import { FormCheck } from "react-bootstrap";
 
 export function AccessibilityBar() {
   const { theme, setTheme } = useTheme();
   const [themesMenuStatus, setThemesMenuStatus] = useState(false);
 
-  const themes = ["Predeterminado", "Amanecer", "Ceniza", "Grafito", "Noche"];
-  const openThemesMenu = () => {
-    setThemesMenuStatus((prev) => !prev);
+  const themes = ["Predeterminado", "Amanecer", "Anochecer", "Ceniza", "Grafito", "Noche"];
+  const openThemesMenu = (event) => {
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      setThemesMenuStatus((prev) => !prev);
+    }
   };
 
   const handleThemeChange = (index) => {
-    console.log("changing theme", index);
     setTheme(themes[index]);
+    setThemesMenuStatus((prev) => !prev);
+    document.getElementById("message").textContent = "Se ha cambiado el tema seleccionado a: "+ themes[index]
+    setTimeout(() => {
+      document.getElementById("message").textContent = "";
+    }, 3000);
   };
-
+  const handleBlur = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setThemesMenuStatus(false);
+    }
+  };
   return (
-    <div className={styles.bar}>
-      <button aria-label="Disminuir tamaño de letra">
+    <div className={styles.bar} onBlur={handleBlur}>
+      {/* <button aria-label="Disminuir tamaño de letra">
         <svg
           className="accessibility-bar-btn-content"
           xmlns="http://www.w3.org/2000/svg"
@@ -66,11 +78,14 @@ export function AccessibilityBar() {
             fill="white"
           />
         </svg>
-      </button>
+      </button> */}
       <button
         aria-label="Selecionar tema de contraste"
         style={{ marginRight: "16px" }}
-        onClick={openThemesMenu}
+        className={styles.buttonBar}
+        onClick={() => setThemesMenuStatus((prevState) => !prevState)}
+        onKeyDown={openThemesMenu}
+        aria-expanded = {themesMenuStatus}
       >
         <svg
           className="accessibility-bar-btn-content"
@@ -89,11 +104,16 @@ export function AccessibilityBar() {
           </g>
         </svg>
       </button>
-      <Menu
+      {themesMenuStatus &&(
+        <Menu
+        accessible={true}
         isOpen={themesMenuStatus}
         menuList={themes}
         handleClick={handleThemeChange}
       />
+      )}   
+      <div id="message" aria-live="polite" aria-atomic="true" className={styles.sronly}> 
+      </div>
     </div>
   );
 }

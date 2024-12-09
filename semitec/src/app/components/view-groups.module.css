@@ -93,14 +93,19 @@
     font-size: 1.2vw;
 }
 
-fieldset {
+.fieldsetStyle {
     border: none;
     padding: 0;
     margin: 0;
 }
 
-legend {
+.legendStyle {
     font-size: 1.2vw;
     margin-bottom: 10px;
     font-weight: bold;
 }
+.buttonIcon {
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+  }

@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 import styles from "@/app/_styles/LessonResults.module.css";
 import buttonStyles from "@/app/_styles/Button.module.css";
